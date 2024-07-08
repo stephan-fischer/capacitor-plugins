@@ -57,7 +57,7 @@ import Capacitor
         }
         completion(cachedOrientationType)
     }
-    
+
     @objc private func requestGeometryUpdate(orientationValue: Int, orientationMask: UIInterfaceOrientationMask) {
         if #available(iOS 16, *) {
             let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
@@ -100,7 +100,7 @@ import Capacitor
         self.currentOrientationType = orientationType
         self.plugin.notifyOrientationChangeListeners(orientationType)
     }
-    
+
     @objc private func convertOrientationValueToMask(_ orientationValue: Int) -> UIInterfaceOrientationMask {
         switch orientationValue {
         case UIInterfaceOrientation.landscapeLeft.rawValue:
@@ -113,14 +113,14 @@ import Capacitor
             return UIInterfaceOrientationMask.portraitUpsideDown
         default:
             let isPortrait = UIApplication.shared.windows.first?.windowScene?.interfaceOrientation.isPortrait ?? false
-            return isPortrait ? UIInterfaceOrientationMask.portrait : UIInterfaceOrientationMask.landscapeLeft
+            return isPortrait ? UIInterfaceOrientationMask.portrait : UIInterfaceOrientationMask.landscape
         }
     }
 
     @objc private func convertOrientationTypeToMask(_ orientationType: String) -> UIInterfaceOrientationMask {
         switch orientationType {
         case "landscape":
-            return UIInterfaceOrientationMask.landscapeRight
+            return UIInterfaceOrientationMask.landscape
         case "landscape-primary":
             return UIInterfaceOrientationMask.landscapeLeft
         case "landscape-secondary":

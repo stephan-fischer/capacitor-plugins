@@ -14,17 +14,22 @@ This API requires the following permissions be added to your `AndroidManifest.xm
 
 ```xml
 <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+<uses-permission android:name="android.permission.FOREGROUND_SERVICE_LOCATION" />
 <uses-permission android:name="android.permission.WAKE_LOCK" />
 <!-- Required to request the manage overlay permission -->
 <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
 ```
 
+**Attention**: Replace `FOREGROUND_SERVICE_LOCATION` with the foreground service types you want to use (see [Foreground service types](https://developer.android.com/develop/background-work/services/fg-service-types)).
+
 You also need to add the following receiver and service **inside** the `application` tag in your `AndroidManifest.xml`:
 
 ```xml
 <receiver android:name="io.capawesome.capacitorjs.plugins.foregroundservice.NotificationActionBroadcastReceiver" />
-<service android:name="io.capawesome.capacitorjs.plugins.foregroundservice.AndroidForegroundService" />
+<service android:name="io.capawesome.capacitorjs.plugins.foregroundservice.AndroidForegroundService" android:foregroundServiceType="location" />
 ```
+
+**Attention**: Replace `location` with the foreground service types you want to use (see [Foreground service types](https://developer.android.com/develop/background-work/services/fg-service-types)).
 
 ## Configuration
 
@@ -93,7 +98,7 @@ You can use the `requestManageOverlayPermission()` method to request the
 permission and the `checkManageOverlayPermission()` method to check if the
 permission is granted.
 
-Only available for Android.
+Only available on Android.
 
 **Since:** 0.3.0
 
@@ -108,7 +113,7 @@ startForegroundService(options: StartForegroundServiceOptions) => Promise<void>
 
 Starts the foreground service.
 
-Only available for Android.
+Only available on Android.
 
 | Param         | Type                                                                                    |
 | ------------- | --------------------------------------------------------------------------------------- |
@@ -127,7 +132,7 @@ stopForegroundService() => Promise<void>
 
 Stops the foreground service.
 
-Only available for Android.
+Only available on Android.
 
 **Since:** 0.0.1
 
@@ -144,7 +149,7 @@ Check permission to display notifications.
 
 On **Android**, this method only needs to be called on Android 13+.
 
-Only available for Android.
+Only available on Android.
 
 **Returns:** <code>Promise&lt;<a href="#permissionstatus">PermissionStatus</a>&gt;</code>
 
@@ -163,7 +168,7 @@ Request permission to display notifications.
 
 On **Android**, this method only needs to be called on Android 13+.
 
-Only available for Android.
+Only available on Android.
 
 **Returns:** <code>Promise&lt;<a href="#permissionstatus">PermissionStatus</a>&gt;</code>
 
@@ -180,7 +185,7 @@ checkManageOverlayPermission() => Promise<ManageOverlayPermissionResult>
 
 Check if the overlay permission is granted.
 
-Only available for Android.
+Only available on Android.
 
 **Returns:** <code>Promise&lt;<a href="#manageoverlaypermissionresult">ManageOverlayPermissionResult</a>&gt;</code>
 
@@ -197,7 +202,7 @@ requestManageOverlayPermission() => Promise<ManageOverlayPermissionResult>
 
 Request the manage overlay permission.
 
-Only available for Android.
+Only available on Android.
 
 **Returns:** <code>Promise&lt;<a href="#manageoverlaypermissionresult">ManageOverlayPermissionResult</a>&gt;</code>
 
@@ -209,7 +214,7 @@ Only available for Android.
 ### addListener('buttonClicked', ...)
 
 ```typescript
-addListener(eventName: 'buttonClicked', listenerFunc: ButtonClickedEventListener) => Promise<PluginListenerHandle> & PluginListenerHandle
+addListener(eventName: 'buttonClicked', listenerFunc: ButtonClickedEventListener) => Promise<PluginListenerHandle>
 ```
 
 Called when a notification button is clicked.
@@ -221,7 +226,7 @@ Only available on iOS.
 | **`eventName`**    | <code>'buttonClicked'</code>                                                      |
 | **`listenerFunc`** | <code><a href="#buttonclickedeventlistener">ButtonClickedEventListener</a></code> |
 
-**Returns:** <code>Promise&lt;<a href="#pluginlistenerhandle">PluginListenerHandle</a>&gt; & <a href="#pluginlistenerhandle">PluginListenerHandle</a></code>
+**Returns:** <code>Promise&lt;<a href="#pluginlistenerhandle">PluginListenerHandle</a>&gt;</code>
 
 **Since:** 0.2.0
 
@@ -249,7 +254,7 @@ Remove all listeners for this plugin.
 | Prop            | Type                              | Description                                                                                                                                                                                                     | Since |
 | --------------- | --------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----- |
 | **`body`**      | <code>string</code>               | The body of the notification, shown below the title.                                                                                                                                                            | 0.0.1 |
-| **`buttons`**   | <code>NotificationButton[]</code> | The buttons to show on the notification. Only available for Android (SDK 24+).                                                                                                                                  | 0.2.0 |
+| **`buttons`**   | <code>NotificationButton[]</code> | The buttons to show on the notification. Only available on Android (SDK 24+).                                                                                                                                   | 0.2.0 |
 | **`id`**        | <code>number</code>               | The notification identifier.                                                                                                                                                                                    | 0.0.1 |
 | **`smallIcon`** | <code>string</code>               | The status bar icon for the notification. Icons should be placed in your app's `res/drawable` folder. The value for this option should be the drawable resource ID, which is the filename without an extension. | 0.0.1 |
 | **`title`**     | <code>string</code>               | The title of the notification.                                                                                                                                                                                  | 0.0.1 |

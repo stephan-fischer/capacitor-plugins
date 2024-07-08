@@ -1,5 +1,17 @@
 # Changelog
 
+## 6.0.1
+
+### Patch Changes
+
+- [`165db48`](https://github.com/capawesome-team/capacitor-plugins/commit/165db488a5c4aea335fa71e535533cd103424a0b) ([#209](https://github.com/capawesome-team/capacitor-plugins/pull/209)): fix(ios): lock orientation type `LANDSCAPE` now supports `LANDSCAPE_PRIMARY` and `LANDSCAPE_SECONDARY`
+
+## 6.0.0
+
+### Major Changes
+
+- [`7033a8a`](https://github.com/capawesome-team/capacitor-plugins/commit/7033a8a42984523902f125239c3623e1e872b489) ([#159](https://github.com/capawesome-team/capacitor-plugins/pull/159)): feat: update to Capacitor 6
+
 ## 5.0.1
 
 ### Patch Changes

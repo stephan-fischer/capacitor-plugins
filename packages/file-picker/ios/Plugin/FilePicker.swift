@@ -29,21 +29,26 @@ import MobileCoreServices
         return targetUrl
     }
 
-    public func openDocumentPicker(multiple: Bool, documentTypes: [String]) {
+    public func openDocumentPicker(limit: Int, documentTypes: [String]) {
         DispatchQueue.main.async {
             let picker = UIDocumentPickerViewController(documentTypes: documentTypes, in: .import)
             picker.delegate = self
-            picker.allowsMultipleSelection = multiple
+            picker.allowsMultipleSelection = limit == 0
             picker.modalPresentationStyle = .fullScreen
             self.presentViewController(picker)
         }
     }
 
-    public func openImagePicker(multiple: Bool, skipTranscoding: Bool, limit: Int?) {
+    public func openImagePicker(limit: Int, skipTranscoding: Bool, ordered: Bool) {
         DispatchQueue.main.async {
             if #available(iOS 14, *) {
                 var configuration = PHPickerConfiguration(photoLibrary: PHPhotoLibrary.shared())
-                configuration.selectionLimit = multiple ? (limit ?? 0) : 1
+                configuration.selectionLimit = limit
+
+                if #available(iOS 15, *) {
+                    configuration.selection = ordered ? .ordered : .default
+                }
+
                 configuration.filter = .images
                 configuration.preferredAssetRepresentationMode = skipTranscoding ? .current : .automatic
                 let picker = PHPickerViewController(configuration: configuration)
@@ -60,11 +65,16 @@ import MobileCoreServices
         }
     }
 
-    public func openMediaPicker(multiple: Bool, skipTranscoding: Bool, limit: Int?) {
+    public func openMediaPicker(limit: Int, skipTranscoding: Bool, ordered: Bool) {
         DispatchQueue.main.async {
             if #available(iOS 14, *) {
                 var configuration = PHPickerConfiguration(photoLibrary: PHPhotoLibrary.shared())
-                configuration.selectionLimit = multiple ? (limit ?? 0) : 1
+                configuration.selectionLimit = limit
+
+                if #available(iOS 15, *) {
+                    configuration.selection = ordered ? .ordered : .default
+                }
+
                 configuration.preferredAssetRepresentationMode = skipTranscoding ? .current : .automatic
                 let picker = PHPickerViewController(configuration: configuration)
                 picker.delegate = self
@@ -80,11 +90,16 @@ import MobileCoreServices
         }
     }
 
-    public func openVideoPicker(multiple: Bool, skipTranscoding: Bool, limit: Int?) {
+    public func openVideoPicker(limit: Int, skipTranscoding: Bool, ordered: Bool) {
         DispatchQueue.main.async {
             if #available(iOS 14, *) {
                 var configuration = PHPickerConfiguration(photoLibrary: PHPhotoLibrary.shared())
-                configuration.selectionLimit = multiple ? (limit ?? 0) : 1
+                configuration.selectionLimit = limit
+
+                if #available(iOS 15, *) {
+                    configuration.selection = ordered ? .ordered : .default
+                }
+
                 configuration.filter = .videos
                 configuration.preferredAssetRepresentationMode = skipTranscoding ? .current : .automatic
                 let picker = PHPickerViewController(configuration: configuration)
